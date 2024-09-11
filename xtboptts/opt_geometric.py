@@ -367,10 +367,6 @@ def optimization(input_xyz_file: Path,
                 # read logs and concat results
                 if opt_history is None:
                     opt_history = GeometricOptHistory(Path(prefix + '.log'), Path(prefix + '_optim.xyz'))
-                    intermediate_files.append(Path(prefix + '.log').absolute())
-                    intermediate_files.append(Path(prefix + '_optim.xyz').absolute())
-                    intermediate_files.append(Path(prefix + '.vdata_first').absolute())
-                    intermediate_files.append(Path(prefix + '.tmp').absolute())
                 else:
                     opt_history.extend(Path(prefix + '.log'), Path(prefix + '_optim.xyz'))
 
@@ -417,5 +413,10 @@ def optimization(input_xyz_file: Path,
                         shutil.rmtree(file)
                 except:
                     pass
+
+            try:
+                shutil.rmtree(geometric_dir)
+            except:
+                pass
 
     return GeometricResult(status=calc_result, error=calc_error)
